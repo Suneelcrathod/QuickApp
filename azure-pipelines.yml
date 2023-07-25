@@ -23,6 +23,9 @@ stages:
           displayName: 'Npm install'
           inputs:
             command: 'install'
+        - task: gulp@1
+          displayName: 'Run gulp tasks'
+
         - task: Npm@1
           displayName: 'Npm Build'
           inputs:
