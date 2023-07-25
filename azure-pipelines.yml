@@ -27,4 +27,4 @@ stages:
           displayName: 'Npm Build'
           inputs:
             command: 'custom'
-            customCommand: 'ng build'
+            customCommand: 'run build'
