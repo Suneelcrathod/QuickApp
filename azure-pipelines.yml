@@ -27,5 +27,5 @@ stages:
           displayName: 'Npm Build'
           inputs:
             command: 'custom'
-            verbose: false
+            workingDir: 'QuickApp/ClientApp'
             customCommand: 'run build'
