@@ -27,4 +27,4 @@ stages:
           displayName: 'Npm Build'
           inputs:
             command: 'custom'
-            workingDir: 'ng build'
+            customCommand: 'ng build'
