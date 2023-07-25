@@ -27,6 +27,7 @@ stages:
           displayName: 'Build Angular app'
           inputs:
             command: 'custom'
+            workingDir: 'QuickApp/ClientApp'
             customCommand: 'ng build'
         - task: Npm@1
           displayName: 'Test Angular app'
