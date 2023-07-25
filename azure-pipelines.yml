@@ -27,4 +27,5 @@ stages:
           displayName: 'Npm Build'
           inputs:
             command: 'custom'
+            workingDir: 'QuickApp/ClientApp/package.json'
             customCommand: 'ng build'
