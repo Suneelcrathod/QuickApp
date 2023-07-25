@@ -29,3 +29,8 @@ stages:
             command: 'build'
             projects: '**/*.sln'
             arguments: '--no-restore --configuration Release'
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
