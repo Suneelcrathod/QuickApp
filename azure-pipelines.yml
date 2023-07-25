@@ -17,7 +17,7 @@ stages:
           displayName: 'Angular CLI'
           inputs:
             command: 'custom'
-            customCommand: 'install @angular/cli@8.19.4'
+            customCommand: 'install @angular/cli@16.x'
             
         - task: Npm@1
           displayName: 'Npm install'
