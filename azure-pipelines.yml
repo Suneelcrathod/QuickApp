@@ -27,6 +27,7 @@ stages:
           displayName: 'Build Angular app'
           inputs:
             command: 'custom'
+            verbose: false
             customCommand: 'run build'
         - task: Npm@1
           displayName: 'Test Angular app'
