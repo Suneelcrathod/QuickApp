@@ -28,8 +28,4 @@ stages:
           inputs:
             command: 'custom'
             verbose: false
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    customCommand: 'run build'
             customCommand: 'run build'
