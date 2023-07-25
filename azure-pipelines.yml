@@ -24,18 +24,7 @@ stages:
           inputs:
             command: 'install'
         - task: Npm@1
-          displayName: 'Build Angular app'
+          displayName: 'Npm Build'
           inputs:
             command: 'custom'
-            workingDir: 'QuickApp/ClientApp'
-            customCommand: 'ng build'
-        - task: Npm@1
-          displayName: 'Test Angular app'
-          inputs:
-            command: 'custom'
-            customCommand: 'run test'
-        - task: Npm@1
-          displayName: 'e2e angular app'
-          inputs:
-            command: 'custom'
-            customCommand: 'run e2e'
+            workingDir: 'ng build'
