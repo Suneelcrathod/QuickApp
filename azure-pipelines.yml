@@ -5,6 +5,14 @@ variables:
 stages:
   - stage: Build
     jobs:
+      - job: Fortend
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+        - task: NodeTool@0
+          inputs:
+            versionSpec: '16.x'
+        
       - job: backend
         pool:
           vmImage: ubuntu-latest
@@ -38,11 +46,5 @@ stages:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
             ArtifactName: 'drop'
             publishLocation: 'Container'
-      - job: Fortend
-        pool:
-          vmImage: ubuntu-latest
-        steps:
-        - task: NodeTool@0
-          inputs:
-            versionSpec: '16.x'
+      
         
