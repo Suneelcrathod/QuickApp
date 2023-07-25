@@ -13,6 +13,8 @@ stages:
           displayName: 'install NodeJS'
           inputs:
             versionSpec: '16.x'
+        - task: Cache@2
+          inputs:
         - task: Npm@1
           displayName: 'Angular CLI'
           inputs:
