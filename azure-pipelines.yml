@@ -9,11 +9,9 @@ stages:
         pool:
           vmimage: ubuntu-latest
         steps:
-        - task: NuGetCommand@2
-          displayName: 'NuGet'
+        - task: NuGetToolInstaller@1
           inputs:
-            command: 'restore'
-            restoreSolution: '**/*.sln'
+            versionSpec: 
         - task: NuGetCommand@2
           displayName: 'NuGet Restore'
           inputs:
