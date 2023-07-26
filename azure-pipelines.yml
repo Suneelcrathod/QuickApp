@@ -62,15 +62,12 @@ stages:
             command: 'custom'
             workingDir: 'QuickApp/ClientApp/'
             customCommand: 'run build'
-        - task: Npm@1
-          displayName: 'Npm test'
+        - task: CopyFiles@2
           inputs:
-            command: 'custom'
-            workingDir: 'QuickApp/ClientApp/'
-            customCommand: 'run test'
-        - task: Npm@1
-          displayName: "Npm e2e"
+            Contents: '**'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)//dist'
+        - task: PublishBuildArtifacts@1
           inputs:
-            command: 'custom'
-            workingDir: 'QuickApp/ClientApp/'
-            customCommand: 'run e2e'
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
