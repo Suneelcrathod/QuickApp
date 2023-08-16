@@ -7,7 +7,7 @@ stages:
     jobs:
       - job: Backend
         pool:
-          vmimage: ubuntu-latest
+          vmimage: windows-latest
         steps:
         - task: NuGetToolInstaller@1
           inputs:
@@ -31,10 +31,10 @@ stages:
         - task: CopyFiles@2
           inputs:
             Contents: '**'
-            TargetFolder: '$(Build.ArtifactStagingDirectory)'
+            TargetFolder: '$(Build.SourcesDirectory)'
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            PathtoPublish: '$(Build.SourcesDirectory)'
             ArtifactName: 'Backend'
             publishLocation: 'Container'
   - stage: Build_Frontend
@@ -52,7 +52,6 @@ stages:
           inputs:
             command: 'custom'
             customCommand: 'install @angular/cli -g'
-            
         - task: Npm@1
           displayName: 'Npm install'
           inputs:
@@ -67,9 +66,9 @@ stages:
         - task: CopyFiles@2
           inputs:
             Contents: '**'
-            TargetFolder: '$(Build.ArtifactStagingDirectory)//dist'
+            TargetFolder: '$(Build.SourcesDirectory)//dist'
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: '$(Build.ArtifactStagingDirectory)//dist'
+            PathtoPublish: '$(Build.SourcesDirectory)//dist'
             ArtifactName: 'Frontend'
             publishLocation: 'Container'
