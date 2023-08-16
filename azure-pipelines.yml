@@ -3,7 +3,7 @@ trigger:
 variables:
  buildConfiguration: 'Release'
 stages:
-  - stage: Build
+  - stage: Build_Backend
     jobs:
       - job: Backend
         pool:
@@ -37,7 +37,7 @@ stages:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
             ArtifactName: 'Backend'
             publishLocation: 'Container'
-  - stage: Build
+  - stage: Build_Frontend
     jobs:
       - job: Frontend
         pool:
