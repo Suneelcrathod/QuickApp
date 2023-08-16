@@ -35,11 +35,13 @@ stages:
         - task: PublishBuildArtifacts@1
           inputs:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-            ArtifactName: 'drop'
+            ArtifactName: 'Backend'
             publishLocation: 'Container'
-      - job: Fortend
+  - stage: Build
+    jobs:
+      - job: Frontend
         pool:
-          vmImage: ubuntu-latest
+          vmimage: ubuntu-latest
         steps:
         - task: NodeTool@0
           displayName: 'install NodeJS'
@@ -69,5 +71,5 @@ stages:
         - task: PublishBuildArtifacts@1
           inputs:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)//dist'
-            ArtifactName: 'drop'
+            ArtifactName: 'Frontend'
             publishLocation: 'Container'
