@@ -28,10 +28,10 @@ stages:
             command: 'build'
             projects: '**/*.sln'
             arguments: '--no-restore --configuration Release'
-        - task: CopyFiles@2
-          inputs:
-            Contents: '**'
-            TargetFolder: '$(Build.SourcesDirectory)'
+        # - task: CopyFiles@2
+        #   inputs:
+        #     Contents: '**'
+        #     TargetFolder: '$(Build.SourcesDirectory)'
         - task: PublishBuildArtifacts@1
           inputs:
             PathtoPublish: '$(Build.SourcesDirectory)'
@@ -63,12 +63,12 @@ stages:
             command: 'custom'
             workingDir: 'QuickApp/ClientApp/'
             customCommand: 'run build'
-        - task: CopyFiles@2
-          inputs:
-            Contents: '**'
-            TargetFolder: '$(Build.SourcesDirectory)//dist'
+        # - task: CopyFiles@2
+        #   inputs:
+        #     Contents: '**'
+        #     TargetFolder: '$(Build.SourcesDirectory)/dist'
         - task: PublishBuildArtifacts@1
           inputs:
-            PathtoPublish: '$(Build.SourcesDirectory)//dist'
+            PathtoPublish: '$(Build.SourcesDirectory)/dist'
             ArtifactName: 'Frontend'
             publishLocation: 'Container'
