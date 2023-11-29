@@ -39,7 +39,6 @@ stages:
             publishLocation: 'Container'
   - stage: 
     jobs:
-      - 
       - job: Frontend
         pool:
           vmimage: ubuntu-latest
