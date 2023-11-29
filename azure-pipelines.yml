@@ -37,7 +37,9 @@ stages:
             PathtoPublish: '$(Build.SourcesDirectory)'
             ArtifactName: 'Backend'
             publishLocation: 'Container'
-
+  - stage: 
+    jobs:
+      - 
       - job: Frontend
         pool:
           vmimage: ubuntu-latest
@@ -71,15 +73,15 @@ stages:
             PathtoPublish: '$(Build.SourcesDirectory)/dist'
             ArtifactName: 'Frontend'
             publishLocation: 'Container'
-  - stage: 
-    jobs:
-      - job: Build_installer_job
-        pool:
-          name: my-private
-        steps:
-        - checkout: self
-          clean: true
-        - task: DownloadPipelineArtifact@2
-          inputs:
-           buildType: 'current'
-           targetPath: '$(Build.ArtifactStagingDirectory)'
+  # - stage: 
+  #   jobs:
+  #     - job: Build_installer_job
+  #       pool:
+  #         name: my-private
+  #       steps:
+  #       - checkout: self
+  #         clean: true
+  #       - task: DownloadPipelineArtifact@2
+  #         inputs:
+  #          buildType: 'current'
+  #          targetPath: '$(Build.ArtifactStagingDirectory)'
