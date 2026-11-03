@@ -3,9 +3,10 @@ name: QuickApp CI
 on:
   push:
     branches:
-      - main
-      - master
+    - main
+    - master
   workflow_dispatch:
+
 
 permissions:
   contents: read
@@ -15,72 +16,92 @@ jobs:
     name: Build Backend
     runs-on: windows-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+    - name: Check out repository
+      uses: actions/checkout@v4
 
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 7.0.x
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 7.0.x
 
-      - name: Restore NuGet packages
-        run: dotnet restore QuickApp.sln
+    - name: Restore NuGet packages
+      run: dotnet restore QuickApp.sln
 
-      - name: Build solution
-        run: dotnet build QuickApp.sln --no-restore --configuration Release
+    - name: Build solution
+      run: dotnet build QuickApp.sln --no-restore --configuration Release
 
-      - name: Publish Backend artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Backend
-          path: |
-            DAL/bin/Release/
-            QuickApp/bin/Release/
-          if-no-files-found: error
+    - name: Publish Backend artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Backend
+        path: |
+          DAL/bin/Release/
+          QuickApp/bin/Release/
+        if-no-files-found: error
 
   build_mfe:
     name: Build Frontend
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+    - name: Check out repository
+      uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 16.x
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 16.x
 
-      - name: Install Angular CLI
-        run: npm install --global @angular/cli
+    - name: Install Angular CLI
+      run: npm install --global @angular/cli
 
-      - name: Install frontend dependencies
-        working-directory: QuickApp/ClientApp
-        run: npm install
+    - name: Install frontend dependencies
+      working-directory: QuickApp/ClientApp
+      run: npm install
 
-      - name: Build frontend
-        working-directory: QuickApp/ClientApp
-        run: npm run build
+    - name: Build frontend
+      working-directory: QuickApp/ClientApp
+      run: npm run build
 
-      - name: Publish Frontend artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Frontend
-          path: QuickApp/ClientApp/dist/
-          if-no-files-found: error
+    - name: Publish Frontend artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Frontend
+        path: QuickApp/ClientApp/dist/
+        if-no-files-found: error
 
   build_installer:
     name: Collect Build Artifacts
-    runs-on: [self-hosted, windows, VSC-03]
+    runs-on: [ self-hosted, windows, VSC-03 ]
     needs:
-      - build_backend
-      - build_mfe
+    - build_backend
+    - build_mfe
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          clean: true
+    - name: Check out repository
+      uses: actions/checkout@v4
+      with:
+        clean: true
 
-      - name: Download pipeline artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
+    - name: Download pipeline artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+
+    - name: Copy artifacts to installer folder
+      shell: powershell
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $source = Join-Path $env:GITHUB_WORKSPACE 'artifacts'
+        $target = 'C:\Installer\quickapp'
+
+        if (-not (Test-Path -LiteralPath $source -PathType Container)) {
+          throw "Artifact staging folder was not found: $source"
+        }
+
+        if (Test-Path -LiteralPath $target -PathType Container) {
+          Get-ChildItem -LiteralPath $target -Force | Remove-Item -Recurse -Force
+        }
+        else {
+          New-Item -Path $target -ItemType Directory -Force | Out-Null
+        }
+
+        Copy-Item -Path (Join-Path $source '*') -Destination $target -Recurse -Force
